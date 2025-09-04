@@ -15,13 +15,34 @@ export class Dog {
   age: number;
 
   @Prop()
+  weight: number;
+
+  @Prop()
   description: string;
 
   @Prop()
-  photoUrl: string;
+  breed: string;
 
   @Prop()
-  breed: string;
+  photoUrl1: string;
+
+  @Prop()
+  photoUrl2: string;
+
+  @Prop()
+  photoUrl3: string;
+
+  @Prop({ min: 0, max: 10 })
+  emotionalStability: number;
+
+  @Prop({ min: 0, max: 10 })
+  obedience: number;
+
+  @Prop({ min: 0, max: 10 })
+  healthCondition: number;
+
+  @Prop({ min: 0, max: 10 })
+  socialization: number;
 }
 
 export const DogSchema = SchemaFactory.createForClass(Dog);

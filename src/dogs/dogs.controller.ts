@@ -1,14 +1,17 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, Query, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { DogsService } from './dogs.service';
 import { Dog } from './dogs.schema';
+import type { Express } from 'express';
 
 @Controller('dogs')
 export class DogsController {
   constructor(private readonly dogsService: DogsService) {}
 
   @Post()
-  create(@Body() dogData: Partial<Dog>) {
-    return this.dogsService.create(dogData);
+  @UseInterceptors(FilesInterceptor('files', 3)) // ✅ приймаємо масив файлів, максимум 3
+  create(@Body() dogData: Partial<Dog>, @UploadedFiles() files?: Express.Multer.File[]) {
+    return this.dogsService.create(dogData, files);
   }
 
   @Get()

@@ -14,14 +14,15 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DogsController = void 0;
 const common_1 = require("@nestjs/common");
+const platform_express_1 = require("@nestjs/platform-express");
 const dogs_service_1 = require("./dogs.service");
 let DogsController = class DogsController {
     dogsService;
     constructor(dogsService) {
         this.dogsService = dogsService;
     }
-    create(dogData) {
-        return this.dogsService.create(dogData);
+    create(dogData, files) {
+        return this.dogsService.create(dogData, files);
     }
     findAll(breed, page = '1', limit = '10') {
         return this.dogsService.findAll(breed, Number(page), Number(limit));
@@ -39,9 +40,11 @@ let DogsController = class DogsController {
 exports.DogsController = DogsController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('files', 3)),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.UploadedFiles)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Array]),
     __metadata("design:returntype", void 0)
 ], DogsController.prototype, "create", null);
 __decorate([

@@ -17,13 +17,30 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const dogs_schema_1 = require("./dogs.schema");
+const cloudinary_service_1 = require("../cloudinary/cloudinary.service");
 let DogsService = class DogsService {
     dogModel;
-    constructor(dogModel) {
+    cloudinaryService;
+    constructor(dogModel, cloudinaryService) {
         this.dogModel = dogModel;
+        this.cloudinaryService = cloudinaryService;
     }
-    async create(dogData) {
-        const newDog = new this.dogModel(dogData);
+    async create(dogData, files) {
+        let photoUrl1;
+        let photoUrl2;
+        let photoUrl3;
+        if (files && files.length > 0) {
+            const uploads = await Promise.all(files.map((file) => this.cloudinaryService.uploadImage(file)));
+            photoUrl1 = uploads[0]?.secure_url;
+            photoUrl2 = uploads[1]?.secure_url;
+            photoUrl3 = uploads[2]?.secure_url;
+        }
+        const newDog = new this.dogModel({
+            ...dogData,
+            photoUrl1,
+            photoUrl2,
+            photoUrl3,
+        });
         return newDog.save();
     }
     async findAll(breed, page = 1, limit = 10) {
@@ -58,6 +75,7 @@ exports.DogsService = DogsService;
 exports.DogsService = DogsService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(dogs_schema_1.Dog.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        cloudinary_service_1.CloudinaryService])
 ], DogsService);
 //# sourceMappingURL=dogs.service.js.map

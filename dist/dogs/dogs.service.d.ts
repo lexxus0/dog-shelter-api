@@ -1,9 +1,11 @@
 import { Model } from 'mongoose';
 import { Dog, DogDocument } from './dogs.schema';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 export declare class DogsService {
     private dogModel;
-    constructor(dogModel: Model<DogDocument>);
-    create(dogData: Partial<Dog>): Promise<Dog>;
+    private readonly cloudinaryService;
+    constructor(dogModel: Model<DogDocument>, cloudinaryService: CloudinaryService);
+    create(dogData: Partial<Dog>, files?: Express.Multer.File[]): Promise<Dog>;
     findAll(breed?: string, page?: number, limit?: number): Promise<{
         data: Dog[];
         total: number;

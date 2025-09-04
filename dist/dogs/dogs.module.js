@@ -12,12 +12,13 @@ const mongoose_1 = require("@nestjs/mongoose");
 const dogs_service_1 = require("./dogs.service");
 const dogs_controller_1 = require("./dogs.controller");
 const dogs_schema_1 = require("./dogs.schema");
+const cloudinary_module_1 = require("../cloudinary/cloudinary.module");
 let DogsModule = class DogsModule {
 };
 exports.DogsModule = DogsModule;
 exports.DogsModule = DogsModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: dogs_schema_1.Dog.name, schema: dogs_schema_1.DogSchema }])],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: dogs_schema_1.Dog.name, schema: dogs_schema_1.DogSchema }]), cloudinary_module_1.CloudinaryModule],
         controllers: [dogs_controller_1.DogsController],
         providers: [dogs_service_1.DogsService],
     })

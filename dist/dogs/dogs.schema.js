@@ -15,9 +15,16 @@ let Dog = class Dog {
     name;
     gender;
     age;
+    weight;
     description;
-    photoUrl;
     breed;
+    photoUrl1;
+    photoUrl2;
+    photoUrl3;
+    emotionalStability;
+    obedience;
+    healthCondition;
+    socialization;
 };
 exports.Dog = Dog;
 __decorate([
@@ -34,16 +41,44 @@ __decorate([
 ], Dog.prototype, "age", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
+    __metadata("design:type", Number)
+], Dog.prototype, "weight", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Dog.prototype, "description", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Dog.prototype, "photoUrl", void 0);
+], Dog.prototype, "breed", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Dog.prototype, "breed", void 0);
+], Dog.prototype, "photoUrl1", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Dog.prototype, "photoUrl2", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Dog.prototype, "photoUrl3", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ min: 0, max: 10 }),
+    __metadata("design:type", Number)
+], Dog.prototype, "emotionalStability", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ min: 0, max: 10 }),
+    __metadata("design:type", Number)
+], Dog.prototype, "obedience", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ min: 0, max: 10 }),
+    __metadata("design:type", Number)
+], Dog.prototype, "healthCondition", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ min: 0, max: 10 }),
+    __metadata("design:type", Number)
+], Dog.prototype, "socialization", void 0);
 exports.Dog = Dog = __decorate([
     (0, mongoose_1.Schema)()
 ], Dog);

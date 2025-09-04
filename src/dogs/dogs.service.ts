@@ -2,13 +2,35 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Dog, DogDocument } from './dogs.schema';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 @Injectable()
 export class DogsService {
-  constructor(@InjectModel(Dog.name) private dogModel: Model<DogDocument>) {}
+  constructor(
+    @InjectModel(Dog.name) private dogModel: Model<DogDocument>,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
 
-  async create(dogData: Partial<Dog>): Promise<Dog> {
-    const newDog = new this.dogModel(dogData);
+  async create(dogData: Partial<Dog>, files?: Express.Multer.File[]): Promise<Dog> {
+    let photoUrl1: string | undefined;
+    let photoUrl2: string | undefined;
+    let photoUrl3: string | undefined;
+
+    if (files && files.length > 0) {
+      const uploads = await Promise.all(files.map((file) => this.cloudinaryService.uploadImage(file)));
+
+      photoUrl1 = uploads[0]?.secure_url;
+      photoUrl2 = uploads[1]?.secure_url;
+      photoUrl3 = uploads[2]?.secure_url;
+    }
+
+    const newDog = new this.dogModel({
+      ...dogData,
+      photoUrl1,
+      photoUrl2,
+      photoUrl3,
+    });
+
     return newDog.save();
   }
 
