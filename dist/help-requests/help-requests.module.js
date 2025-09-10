@@ -6,29 +6,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.HelpRequestsModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const config_1 = require("@nestjs/config");
-const dogs_module_1 = require("./dogs/dogs.module");
-const help_requests_module_1 = require("./help-requests/help-requests.module");
-let AppModule = class AppModule {
+const help_request_schema_1 = require("./schemas/help-request.schema");
+const help_requests_service_1 = require("./help-requests.service");
+const help_requests_controller_1 = require("./help-requests.controller");
+let HelpRequestsModule = class HelpRequestsModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+exports.HelpRequestsModule = HelpRequestsModule;
+exports.HelpRequestsModule = HelpRequestsModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            config_1.ConfigModule.forRoot({ isGlobal: true }),
-            mongoose_1.MongooseModule.forRootAsync({
-                imports: [config_1.ConfigModule],
-                inject: [config_1.ConfigService],
-                useFactory: (config) => ({
-                    uri: config.get('DB_URI'),
-                }),
-            }),
-            dogs_module_1.DogsModule,
-            help_requests_module_1.HelpRequestsModule,
+            mongoose_1.MongooseModule.forFeature([{ name: help_request_schema_1.HelpRequest.name, schema: help_request_schema_1.HelpRequestSchema, collection: 'help_requests' }]),
         ],
+        controllers: [help_requests_controller_1.HelpRequestsController],
+        providers: [help_requests_service_1.HelpRequestsService],
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], HelpRequestsModule);
+//# sourceMappingURL=help-requests.module.js.map
